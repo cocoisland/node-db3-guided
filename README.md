@@ -1,18 +1,28 @@
-# Node DB3 Guided Project
 
-Guided project for **Node DB3** Module.
+### Knex join
+```
 
-## Prerequisites
+db('employees as e')
+  .join('departments as d', 'e.department_id', 'd.id')
+  .select('d.id', 'd.name', 'e.first_name', 'e.last_name', 'e.salary')
 
-- [SQLite Studio](https://sqlitestudio.pl/index.rvt?act=download) installed.
-- [This Query Tool Loaded in the browser](https://www.w3schools.com/Sql/tryit.asp?filename=trysql_select_top).
-- a rest client like [Insomnia](https://insomnia.rest/download/) or [Postman](https://www.getpostman.com/downloads/) installed.
+function find() {
+  return db('users');
+}
 
-## Project Setup
+function findById(id) {
+// first() returns the first entry in the db matching the query
+  return db('users').where({ id }).first();
+}
 
-- [ ] fork and clone this repository.
-- [ ] **CD into the folder** where you cloned **your fork**.
-- [ ] type `npm i` to download dependencies.
-- [ ] type `npm run server` to start the API.
+function add(user) {
+  db('users').insert(user)
+  .then(ids => {
+    return findById(ids[0]);
+  });
+}
 
-Please follow along as the instructor creates database access methods for a multi table schema.
+
+```
+
+
